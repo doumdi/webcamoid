@@ -44,4 +44,7 @@ target_link_libraries(${PLUGIN_NAME} ${AVKYS_PLUGIN_LIBRARIES})
 
 #submodule(s)
 FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
-add_subdirectory(src/dshow)
+
+if(WIN32)
+    add_subdirectory(src/dshow)
+endif(WIN32)
