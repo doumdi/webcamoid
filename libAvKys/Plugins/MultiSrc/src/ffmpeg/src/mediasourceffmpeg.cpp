@@ -632,6 +632,14 @@ bool MediaSourceFFmpeg::initContext()
         inputFormat = av_find_input_format("alsa");
     else if (uri == "/dev/dsp")
         inputFormat = av_find_input_format("oss");
+    else if (uri.startsWith("RTSP",Qt::CaseInsensitive))
+    {
+        av_dict_set(&inputOptions,"rtsp_transport", "tcp",0);
+        av_dict_set(&inputOptions,"stimeout", "5000000",0);
+        //av_dict_set(&inputOptions,"reorder_queue_size", "0", 0);
+        av_dict_set(&inputOptions,"max_delay", "200000",0);
+        //av_dict_set(&inputOptions,"muxdelay", "0.5",0);
+    }
 
     QStringList mmsSchemes;
     mmsSchemes << "mms://" << "mmsh://" << "mmst://";
