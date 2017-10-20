@@ -130,6 +130,7 @@ void MultiSrcElement::controlInterfaceConfigure(QQmlContext *context,
 
 void MultiSrcElement::setMedia(const QString &media)
 {
+    qDebug() << "MultiSrcElement::setMedia(const QString &media) media=" << media;
     this->m_mediaSource->setMedia(media);
 }
 

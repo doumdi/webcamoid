@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         if (subModule)
         {
             //Set media information
-            QMetaObject::invokeMethod(subModule,"setMedia",Q_ARG(QString,"rtsp://admin:admin@24.53.36.3:9001/live.sdp"));
+            QMetaObject::invokeMethod(subModule,"setMedia",Q_ARG(QString,"rtsp://admin:admin@localhost:554/live.sdp"));
 
             //Start loop
             QMetaObject::invokeMethod(subModule,"setState",Q_ARG(AkElement::ElementState,AkElement::ElementStatePlaying));
