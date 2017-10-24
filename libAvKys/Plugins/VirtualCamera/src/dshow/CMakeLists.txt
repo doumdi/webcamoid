@@ -16,7 +16,7 @@ include_directories(
 )
 
 set (submodule_headers
-#    src/plugin.h
+    src/plugin.h
     src/cameraoutdshow.h
     ../cameraout.h
 )

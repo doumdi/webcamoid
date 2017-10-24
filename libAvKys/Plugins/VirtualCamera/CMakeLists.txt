@@ -48,3 +48,5 @@ FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
 if(WIN32)
     add_subdirectory(src/dshow)
 endif(WIN32)
+
+add_subdirectory(src/ffmpeg)

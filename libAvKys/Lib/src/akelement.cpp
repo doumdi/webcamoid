@@ -537,7 +537,11 @@ QStringList AkElement::listSubModulesPaths(const QString &pluginId)
         QPluginLoader pluginLoader(pluginPath);
 
         if (!pluginLoader.load())
+        {
+            qDebug() << "Cannot load : " << pluginFile;
+            qDebug() << "Error: " << pluginLoader.errorString();
             continue;
+        }
 
         auto metaData = pluginLoader.metaData();
 
