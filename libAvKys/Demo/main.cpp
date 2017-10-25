@@ -40,6 +40,7 @@ int main(int argc, char* argv[])
 
 
 
+        //First, a virtual camera needs to be created
         VirtualCameraPtr->setProperty("media","VirtCam");
 
 

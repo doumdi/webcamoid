@@ -29,3 +29,4 @@ SET (AVKYS_LIBRARY_INSTALL_PATH bin/AvKysPlugins)
 
 add_subdirectory(MultiSrc)
 add_subdirectory(VirtualCamera)
+add_subdirectory(ACapsConvert)
