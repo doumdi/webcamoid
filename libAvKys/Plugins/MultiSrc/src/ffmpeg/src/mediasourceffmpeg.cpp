@@ -286,6 +286,7 @@ AbstractStreamPtr MediaSourceFFmpeg::createStream(int index, bool noModify)
 void MediaSourceFFmpeg::readPackets()
 {
     while (this->m_run) {
+
         this->m_dataMutex.lock();
 
         if (this->packetQueueSize() >= this->m_maxPacketQueueSize)
@@ -634,10 +635,11 @@ bool MediaSourceFFmpeg::initContext()
         inputFormat = av_find_input_format("oss");
     else if (uri.startsWith("RTSP",Qt::CaseInsensitive))
     {
-        av_dict_set(&inputOptions,"rtsp_transport", "tcp",0);
-        av_dict_set(&inputOptions,"stimeout", "5000000",0);
+        qDebug() << "Setting RTSP options...";
+        //av_dict_set(&inputOptions,"rtsp_transport", "tcp",0);
+        //av_dict_set(&inputOptions,"stimeout", "5000000",0);
         //av_dict_set(&inputOptions,"reorder_queue_size", "0", 0);
-        av_dict_set(&inputOptions,"max_delay", "200000",0);
+        //av_dict_set(&inputOptions,"max_delay", "200000",0);
         //av_dict_set(&inputOptions,"muxdelay", "0.5",0);
     }
 
@@ -659,7 +661,14 @@ bool MediaSourceFFmpeg::initContext()
                                 uriCopy.toStdString().c_str(),
                                 inputFormat,
                                 &inputOptions) >= 0)
+        {
+            qDebug() <<"Done opening : " << uriCopy;
             break;
+        }
+        else
+        {
+            qDebug() << "Error opening : " << uriCopy;
+        }
     }
 
     if (inputOptions)

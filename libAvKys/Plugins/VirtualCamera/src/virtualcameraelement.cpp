@@ -436,6 +436,7 @@ bool VirtualCameraElement::setState(AkElement::ElementState state)
 
 AkPacket VirtualCameraElement::iStream(const AkPacket &packet)
 {
+    qDebug() << "AkPacket VirtualCameraElement::iStream(const AkPacket &packet)";
     this->m_mutex.lock();
 
     if (this->state() == AkElement::ElementStatePlaying) {

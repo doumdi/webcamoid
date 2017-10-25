@@ -441,6 +441,7 @@ void CameraOutDShow::setDriverPath(const QString &driverPath)
 
 void CameraOutDShow::setDevice(const QString &device)
 {
+    qDebug() << "CameraOutDShow::setDevice() " << device;
     if (this->m_device == device)
         return;
 

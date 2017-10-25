@@ -5,10 +5,12 @@
 
 int main(int argc, char* argv[])
 {
+
     QCoreApplication app(argc,argv);
 
     qDebug() << "Starting...";
-
+    //Why do we need to do that?
+    qRegisterMetaType<AkPacket>("AkPacket");
 
     //Tell the library where to look for plugins
     //TODO Hardcoded for now...
@@ -31,9 +33,16 @@ int main(int argc, char* argv[])
 
 
         //Set Parameters
-        MultiSrcPtr->setProperty("media", "rtsp://user:password@192.168.0.44:554/live.sdp");
-        MultiSrcPtr->setProperty("loop", true);          // Loop the video/media if you need it.
+        //Start streaming something from VLC at this address for testing...
+        MultiSrcPtr->setProperty("media", "rtsp://localhost:8554/live");
+        MultiSrcPtr->setProperty("loop", false);          // Loop the video/media if you need it.
         MultiSrcPtr->setProperty("showLog", true);       // Show play log in console, similar to MPlayer and ffplay.
+
+
+
+        VirtualCameraPtr->setProperty("media","VirtCam");
+
+
 
 
         // start the pipeline.
