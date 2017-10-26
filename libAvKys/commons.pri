@@ -20,7 +20,7 @@ COMMONS_APPNAME = "libAvKys"
 COMMONS_TARGET = $$lower($${COMMONS_APPNAME})
 COMMONS_TARGET = $$replace(COMMONS_TARGET, lib, "")
 VER_MAJ = 8
-VER_MIN = 1
+VER_MIN = 5
 VER_PAT = 0
 VERSION = $${VER_MAJ}.$${VER_MIN}.$${VER_PAT}
 
@@ -32,6 +32,10 @@ isEmpty(QDOCTOOL): {
 isEmpty(QMAKE_LRELEASE) {
     unix: QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
     !unix: QMAKE_LRELEASE = $$[QT_INSTALL_LIBEXECS]/lrelease
+}
+isEmpty(QMAKE_LUPDATE) {
+    unix: QMAKE_LUPDATE = $$[QT_INSTALL_BINS]/lupdate
+    !unix: QMAKE_LUPDATE = $$[QT_INSTALL_LIBEXECS]/lupdate
 }
 
 win32 {
@@ -117,6 +121,13 @@ OBJECTS_DIR = $${COMMONS_BUILD_PATH}/obj
 RCC_DIR = $${COMMONS_BUILD_PATH}/rcc
 UI_DIR = $${COMMONS_BUILD_PATH}/ui
 
+# Update translations.
+isEmpty(NOLUPDATE): !isEmpty(TRANSLATIONS_PRI): CONFIG(debug, debug|release) {
+    updatetr.commands = $$QMAKE_LUPDATE -no-obsolete $$TRANSLATIONS_PRI
+    QMAKE_EXTRA_TARGETS += updatetr
+    PRE_TARGETDEPS += updatetr
+}
+
 # Compile translations files.
 isEmpty(NOLRELEASE): !isEmpty(TRANSLATIONS): CONFIG(debug, debug|release) {
     compiletr.input = TRANSLATIONS
@@ -148,3 +159,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7) {
+    QT_VER_STR = $${QT_MAJOR_VERSION}.$${QT_MINOR_VERSION}.$${QT_PATCH_VERSION}
+    error("Qt 5.7.0 or higher required, current installed version is $${QT_VER_STR}")
+}
+
+!qtHaveModule(quickcontrols2) {
+    error("QtQuick Controls 2 required.")
+}

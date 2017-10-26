@@ -18,6 +18,9 @@
 
 CONFIG += console c++11
 
+INCLUDEPATH += \
+    ../../Plugins/VirtualCamera/src/dshow/VirtualCameraFilter/BaseClasses/src
+
 SOURCES = \
     test.cpp
 
