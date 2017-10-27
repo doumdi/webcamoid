@@ -28,7 +28,6 @@ set (plugin_srcs
 
 set (plugin_qrc
     VirtualCamera.qrc
-    translations.qrc
 )
 
 

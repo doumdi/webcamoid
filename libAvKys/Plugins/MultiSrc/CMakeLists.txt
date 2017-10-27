@@ -25,7 +25,6 @@ set (plugin_srcs
 
 set (plugin_qrc
     MultiSrc.qrc
-    translations.qrc
 )
 
 
