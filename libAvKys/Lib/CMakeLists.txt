@@ -6,46 +6,70 @@ find_package(Qt5Core REQUIRED)
 
 add_definitions(-DQT_DEPRECATED_WARNINGS -DAKCOMMONS_LIBRARY)
 
-include_directories(src)
+if(APPLE)
+    add_definitions(-DEXTENSION_SHLIB=".dyld")
+    add_definitions(-DPREFIX_SHLIB="")
+    add_definitions(-DINSTALLPLUGINSDIR="Plugins")
+    add_definitions(-DEXECPREFIX="")
+endif()
+
+if(WIN32)
+
+endif()
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/src)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/src/qml)
 
 set (libavkys_headers
     src/ak.h
-    src/akutils.h
+    src/akaudiocaps.h
+    src/akaudiopacket.h
     src/akcaps.h
     src/akcommons.h
     src/akelement.h
     src/akfrac.h
+    src/akmultimediasourceelement.h
     src/akpacket.h
     src/akplugin.h
-    src/akmultimediasourceelement.h
+    src/akunit.h 
     src/akvideocaps.h
-    src/akaudiocaps.h
     src/akvideopacket.h
-    src/akaudiopacket.h
+    src/qml/akcolorizedimage.h
+    src/qml/akpalette.h
+    src/qml/akpalettegroup.h
+    src/qml/aktheme.h
 )
 
 set (libavkys_srcs
     src/ak.cpp
-    src/akutils.cpp
+    src/akaudiocaps.cpp
+    src/akaudiopacket.cpp
     src/akcaps.cpp
     src/akelement.cpp
     src/akfrac.cpp
-    src/akpacket.cpp
-    src/akplugin.cpp
     src/akmultimediasourceelement.cpp
+    src/akpacket.cpp
+    src/akunit.cpp
     src/akvideocaps.cpp
-    src/akaudiocaps.cpp
     src/akvideopacket.cpp
-    src/akaudiopacket.cpp
+    src/qml/akcolorizedimage.cpp
+    src/qml/akpalette.cpp
+    src/qml/akpalettegroup.cpp
+    src/qml/aktheme.cpp
 )
 
 #This will generate moc_* for Qt
 QT5_WRAP_CPP(libavkys_moc_srcs ${libavkys_headers})
 
+message(STATUS "MOC FILES : ${libavkys_moc_srcs} ${CMAKE_CURRENT_BINARY_DIR}")
 
-add_library(AvKys SHARED ${libavkys_srcs} ${libavkys_headers} ${libavkys_moc_srcs})
-qt5_use_modules(AvKys Core Concurrent Gui Qml)
+add_custom_target(moc_files SOURCES ${libavkys_moc_srcs})
+add_library(AvKys SHARED ${libavkys_srcs} ${libavkys_headers})
+add_dependencies(AvKys moc_files)
+
+qt5_use_modules(AvKys Core Concurrent Gui Qml Quick)
 
 set(AVKYS_LIBS AvKys CACHE INTERNAL "doc string")
-set(AVKYS_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/src CACHE INTERNAL "doc string")
+set(AVKYS_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/qml CACHE INTERNAL "doc string")
 

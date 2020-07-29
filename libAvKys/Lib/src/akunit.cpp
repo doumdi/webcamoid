@@ -515,3 +515,5 @@ QDebug operator <<(QDebug debug, const AkUnit::Unit &unit)
 
     return debug.space();
 }
+
+#include "moc_akunit.cpp"
