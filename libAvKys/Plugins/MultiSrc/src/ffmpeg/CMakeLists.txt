@@ -3,13 +3,15 @@ message(STATUS "Building ${PLUGIN_NAME} : ${SUBMMODULE_NAME} submodule.")
 
 #FFMPEG DEFINITIONS
 add_definitions(-D__STDC_CONSTANT_MACROS)
-add_definitions(-DHAVE_FREECONTEXT)
-add_definitions(-DHAVE_PACKETREF)
-add_definitions(-DHAVE_SENDRECV)
-add_definitions(-DHAVE_SUBTITLEDATA)
-add_definitions(-DHAVE_CODECPAR)
-add_definitions(-DHAVE_FRAMEALLOC)
-add_definitions(-DHAVE_SAMPLEFORMAT64)
+# add_definitions(-DHAVE_FREECONTEXT)
+# add_definitions(-DHAVE_PACKETREF)
+# add_definitions(-DHAVE_SENDRECV)
+# add_definitions(-DHAVE_SUBTITLEDATA)
+# add_definitions(-DHAVE_CODECPAR)
+# add_definitions(-DHAVE_FRAMEALLOC)
+# add_definitions(-DHAVE_SAMPLEFORMAT64)
+add_definitions(-DHAVE_BEST_EFFORT_TS)
+add_definitions(-DHAVE_LIBAVDEVICE)
 
 SET(LIBRARY_OUTPUT_PATH ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
 
