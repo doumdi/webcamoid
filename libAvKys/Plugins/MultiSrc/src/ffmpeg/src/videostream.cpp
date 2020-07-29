@@ -159,7 +159,9 @@ void VideoStream::processData(AVFrame *frame)
                                      delay,
                                      AV_SYNC_THRESHOLD_MAX);
 
-        if (!qIsNaN(diff)
+        //TODO - This is causing latency on RTSP Streams
+
+        /*if (!qIsNaN(diff)
             && qAbs(diff) < AV_NOSYNC_THRESHOLD
             && delay < AV_SYNC_FRAMEDUP_THRESHOLD) {
             // Video is backward the external clock.
@@ -176,7 +178,7 @@ void VideoStream::processData(AVFrame *frame)
 
                 continue;
             }
-        } else
+        } else*/
             this->globalClock()->setClock(pts);
 
         this->m_clockDiff = diff;

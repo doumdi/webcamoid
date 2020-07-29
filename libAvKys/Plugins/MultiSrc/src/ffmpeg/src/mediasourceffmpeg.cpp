@@ -312,8 +312,14 @@ qint64 MediaSourceFFmpeg::maxPacketQueueSize() const
 
 bool MediaSourceFFmpeg::showLog() const
 {
+<<<<<<< HEAD
     return this->d->m_showLog;
 }
+=======
+    while (this->m_run) {
+
+        this->m_dataMutex.lock();
+>>>>>>> origin/rtsp-dev
 
 AkElement::ElementState MediaSourceFFmpeg::state() const
 {
@@ -709,6 +715,7 @@ bool MediaSourceFFmpeg::initContext()
         inputFormat = av_find_input_format("alsa");
     else if (uri == "/dev/dsp")
         inputFormat = av_find_input_format("oss");
+<<<<<<< HEAD
     else if (uri.startsWith("udp://"))
         av_dict_set(&inputOptions, "timeout", "3000", 0);
 
@@ -735,6 +742,44 @@ bool MediaSourceFFmpeg::initContext()
                             uri.toStdString().c_str(),
                             inputFormat,
                             &inputOptions);
+=======
+    else if (uri.startsWith("RTSP",Qt::CaseInsensitive))
+    {
+        qDebug() << "Setting RTSP options...";
+        //av_dict_set(&inputOptions,"rtsp_transport", "tcp",0);
+        //av_dict_set(&inputOptions,"stimeout", "5000000",0);
+        //av_dict_set(&inputOptions,"reorder_queue_size", "0", 0);
+        //av_dict_set(&inputOptions,"max_delay", "200000",0);
+        //av_dict_set(&inputOptions,"muxdelay", "0.5",0);
+    }
+
+    QStringList mmsSchemes;
+    mmsSchemes << "mms://" << "mmsh://" << "mmst://";
+
+    AVFormatContext *inputContext = nullptr;
+
+    for (const QString &scheme: mmsSchemes) {
+        QString uriCopy = uri;
+
+        for (const QString &schemer: mmsSchemes)
+            uriCopy.replace(QRegExp(QString("^%1").arg(schemer)),
+                            scheme);
+
+        inputContext = nullptr;
+
+        if (avformat_open_input(&inputContext,
+                                uriCopy.toStdString().c_str(),
+                                inputFormat,
+                                &inputOptions) >= 0)
+        {
+            qDebug() <<"Done opening : " << uriCopy;
+            break;
+        }
+        else
+        {
+            qDebug() << "Error opening : " << uriCopy;
+        }
+>>>>>>> origin/rtsp-dev
     }
 
     if (inputOptions)

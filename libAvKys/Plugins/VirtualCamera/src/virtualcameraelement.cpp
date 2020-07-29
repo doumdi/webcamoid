@@ -811,8 +811,13 @@ bool VirtualCameraElement::setState(AkElement::ElementState state)
 
 void VirtualCameraElement::rootMethodUpdated(const QString &rootMethod)
 {
+<<<<<<< HEAD
     this->d->m_ipcBridge.setRootMethod(rootMethod.toStdString());
 }
+=======
+    qDebug() << "AkPacket VirtualCameraElement::iStream(const AkPacket &packet)";
+    this->m_mutex.lock();
+>>>>>>> origin/rtsp-dev
 
 VirtualCameraElementPrivate::VirtualCameraElementPrivate()
 {

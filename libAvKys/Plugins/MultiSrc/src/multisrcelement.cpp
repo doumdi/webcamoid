@@ -209,8 +209,13 @@ void MultiSrcElement::seek(qint64 seekTo, SeekPosition position)
 
 void MultiSrcElement::setMedia(const QString &media)
 {
+<<<<<<< HEAD
     if (this->d->m_mediaSource)
         this->d->m_mediaSource->setMedia(media);
+=======
+    qDebug() << "MultiSrcElement::setMedia(const QString &media) media=" << media;
+    this->m_mediaSource->setMedia(media);
+>>>>>>> origin/rtsp-dev
 }
 
 void MultiSrcElement::setStreams(const QList<int> &streams)
