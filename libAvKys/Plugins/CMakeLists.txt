@@ -28,5 +28,5 @@ SET(LIBRARY_OUTPUT_PATH ${LIBRARY_OUTPUT_PATH}/AvKysPlugins)
 SET (AVKYS_LIBRARY_INSTALL_PATH bin/AvKysPlugins)
 
 add_subdirectory(MultiSrc)
-# add_subdirectory(VirtualCamera)
+add_subdirectory(VirtualCamera)
 add_subdirectory(ACapsConvert)
