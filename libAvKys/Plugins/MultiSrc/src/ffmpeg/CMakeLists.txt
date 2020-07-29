@@ -18,8 +18,9 @@ find_package(Qt5Core REQUIRED)
 include_directories(
     ${AVKYS_PLUGIN_INCLUDES}
     ${FFMPEG_INCLUDES}
-    ./
-    src
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_BINARY_DIR}/src
 )
 
 set (submodule_headers
@@ -51,10 +52,13 @@ set (submodule_qrc
 
 #This will generate moc_* for Qt
 QT5_WRAP_CPP(submodule_moc_srcs ${submodule_headers})
+add_custom_target(${SUBMMODULE_NAME}_src_mocs SOURCES ${submodule_moc_srcs})
+
 
 QT5_ADD_RESOURCES(submodule_qrc_srcs ${summodule_qrc})
 
-add_library(${SUBMMODULE_NAME} SHARED ${submodule_srcs} ${submodule_headers} ${submodule_moc_srcs} ${submodule_qrc_srcs})
+add_library(${SUBMMODULE_NAME} SHARED ${submodule_srcs} ${submodule_headers} ${submodule_qrc_srcs})
+add_dependencies(${SUBMMODULE_NAME} ${SUBMMODULE_NAME}_src_mocs)
 qt5_use_modules(${SUBMMODULE_NAME} Core Concurrent Widgets Gui Qml)
 target_link_libraries(${SUBMMODULE_NAME} ${AVKYS_PLUGIN_LIBRARIES} ${FFMPEG_LIBS})
 
