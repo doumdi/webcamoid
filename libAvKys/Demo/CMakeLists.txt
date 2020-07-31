@@ -2,8 +2,7 @@ MESSAGE ( STATUS "Buiding AkKysDemo...")
 
 find_package(Qt5Core REQUIRED)
 
-include_directories(${AVKYS_INCLUDES}
-                    ./)
+include_directories(${AVKYS_INCLUDES} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 set (demo_headers
     main.h
