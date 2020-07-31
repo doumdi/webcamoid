@@ -29,6 +29,7 @@ set (plugin_qrc
 
 add_subdirectory(src/VCamUtils)
 
+
 if(APPLE)
     add_subdirectory(src/cmio)
 endif()
@@ -42,15 +43,17 @@ add_custom_target(${PLUGIN_NAME}_src_mocs SOURCES ${plugin_moc_srcs})
 QT5_ADD_RESOURCES(plugin_qrc_srcs ${plugin_qrc})
 add_library(${PLUGIN_NAME} SHARED ${plugin_srcs} ${plugin_headers} ${plugin_qrc_srcs})
 qt5_use_modules(${PLUGIN_NAME} Core Concurrent Gui Qml)
-target_link_libraries(${PLUGIN_NAME} ${AVKYS_PLUGIN_LIBRARIES} VCamIPC)
+# Link step below
 add_dependencies(${PLUGIN_NAME} ${PLUGIN_NAME}_src_mocs)
-
 
 #submodule(s)
 FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
 
 if(WIN32)
     add_subdirectory(src/dshow)
-endif(WIN32)
+endif()
 
-# add_subdirectory(src/ffmpeg)
+if(APPLE)
+    target_link_libraries(${PLUGIN_NAME} ${AVKYS_PLUGIN_LIBRARIES} VCamIPC VCamUtils "-framework Foundation" "-framework IOSurface")
+    # add_subdirectory(src/ffmpeg)
+endif()
