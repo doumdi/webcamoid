@@ -2,6 +2,8 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_definitions(-DQT_DEBUG)
 
+set(LIBRARY_OUTPUT_PATH ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
+
 set (VCamUtils_headers
     src/fraction.h
     src/image/color.h

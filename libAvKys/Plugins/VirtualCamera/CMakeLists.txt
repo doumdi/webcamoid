@@ -5,6 +5,10 @@ add_definitions(-DUNICODE)
 
 find_package(Qt5Core REQUIRED)
 
+
+#submodule(s)
+FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
+
 include_directories(
     ${AVKYS_PLUGIN_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -46,8 +50,7 @@ qt5_use_modules(${PLUGIN_NAME} Core Concurrent Gui Qml)
 # Link step below
 add_dependencies(${PLUGIN_NAME} ${PLUGIN_NAME}_src_mocs)
 
-#submodule(s)
-FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
+
 
 if(WIN32)
     add_subdirectory(src/dshow)
