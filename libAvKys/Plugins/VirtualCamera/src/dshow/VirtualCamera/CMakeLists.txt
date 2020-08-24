@@ -57,7 +57,7 @@ set(VirtualCamera_srcs
 
 set(VirtualCamera_def VirtualCamera.def)
 
-add_library(${DSHOW_PLUGIN_NAME} SHARED ${VirtualCamera_srcs} ${VirtualCamera_headers} ${VirtualCamera_def})
+add_library(${DSHOW_PLUGIN_NAME} SHARED ${VirtualCamera_srcs} ${VirtualCamera_headers})
 target_link_libraries(${DSHOW_PLUGIN_NAME}
     VCamIPC
     PlatformUtils
