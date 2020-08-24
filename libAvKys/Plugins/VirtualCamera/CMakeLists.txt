@@ -38,6 +38,10 @@ if(APPLE)
     add_subdirectory(src/cmio)
 endif()
 
+if(WIN32)
+    add_subdirectory(src/dshow)
+endif()
+
 
 
 #This will generate moc_* for Qt
@@ -51,12 +55,23 @@ qt5_use_modules(${PLUGIN_NAME} Core Concurrent Gui Qml)
 add_dependencies(${PLUGIN_NAME} ${PLUGIN_NAME}_src_mocs)
 
 
-
-if(WIN32)
-    add_subdirectory(src/dshow)
-endif()
+# Setup additional linking libraries
 
 if(APPLE)
     target_link_libraries(${PLUGIN_NAME} ${AVKYS_PLUGIN_LIBRARIES} VCamIPC VCamUtils "-framework Foundation" "-framework IOSurface")
-    # add_subdirectory(src/ffmpeg)
+endif()
+
+if(WIN32)
+     target_link_libraries(${PLUGIN_NAME}
+        ${AVKYS_PLUGIN_LIBRARIES}
+        VCamIPC
+        VCamUtils
+        PlatformUtils
+        advapi32
+        gdi32
+        strmiids
+        uuid
+        ole32
+        oleaut32
+        shell32)
 endif()
