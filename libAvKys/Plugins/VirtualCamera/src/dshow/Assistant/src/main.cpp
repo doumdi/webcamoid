@@ -19,7 +19,6 @@
 
 #include <string>
 #include <windows.h>
-
 #include "service.h"
 #include "PlatformUtils/src/utils.h"
 #include "VCamUtils/src/logger/logger.h"
@@ -50,6 +49,7 @@ int main(int argc, char **argv)
     }
 
     AkLoggerLog("Setting service dispatcher");
+    std::cout << "Setting service dispatcher";
 
     WCHAR serviceName[] = TEXT(DSHOW_PLUGIN_ASSISTANT_NAME);
     SERVICE_TABLE_ENTRY serviceTable[] = {
@@ -59,9 +59,10 @@ int main(int argc, char **argv)
 
     if (!StartServiceCtrlDispatcher(serviceTable)) {
         AkLoggerLog("Service dispatcher failed");
-
+        std::cout << "Service dispatcher failed";
         return EXIT_FAILURE;
     }
 
+    std::cout << "OK!";
     return EXIT_SUCCESS;
 }

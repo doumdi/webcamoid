@@ -1543,7 +1543,24 @@ std::vector<AkVCam::MonikerPtr> AkVCam::IpcBridgePrivate::listCameras() const
                                   reinterpret_cast<void **>(&deviceEnumerator));
 
     if (FAILED(hr))
-        return cameras;
+        if (hr == E_POINTER)
+            AkLoggerLog("E_POINTER");
+
+        if (hr == E_NOINTERFACE)
+            AkLoggerLog("E_NOINTERFACE");
+
+        if (hr == CLASS_E_NOAGGREGATION)
+            AkLoggerLog("CLASS_E_NOAGGREGATION");
+
+        if (hr == REGDB_E_CLASSNOTREG)
+            AkLoggerLog("REGDB_E_CLASSNOTREG");
+
+        std::stringstream ss;
+        ss << hr;
+        AkLoggerLog(ss.str().c_str());
+
+        //exit(-1);
+        //return cameras;
 
     // Create an enumerator for the category.
     IEnumMoniker *enumMoniker = nullptr;
@@ -1563,6 +1580,8 @@ std::vector<AkVCam::MonikerPtr> AkVCam::IpcBridgePrivate::listCameras() const
     }
 
     deviceEnumerator->Release();
+
+    std::cout << "Cameras size" << cameras.size() << std::endl;
 
     return cameras;
 }

@@ -1,4 +1,6 @@
 
+SET(LIBRARY_OUTPUT_PATH ${EXECUTABLE_OUTPUT_PATH}/AkVirtualCamera.plugin)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(VirtualCamera_headers

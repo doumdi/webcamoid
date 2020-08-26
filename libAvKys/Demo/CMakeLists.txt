@@ -20,7 +20,9 @@ add_executable(AvKysDemo ${demo_srcs} ${demo_headers} ${demo_moc_srcs})
 qt5_use_modules(AvKysDemo Core Concurrent Gui Qml)
 target_link_libraries(AvKysDemo ${AVKYS_LIBS})
 
-
+add_executable(MyTest test.cpp)
+qt5_use_modules(MyTest Core Concurrent Gui Qml)
+target_link_libraries(MyTest ole32 strmiids gdiplus Winmm)
 
 
 

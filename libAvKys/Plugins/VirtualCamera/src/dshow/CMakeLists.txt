@@ -33,6 +33,7 @@ add_definitions(-DDSHOW_PLUGIN_DEVICE_PREFIX_L=L"${DSHOW_PLUGIN_DEVICE_PREFIX}")
 add_definitions(-DDSHOW_PLUGIN_VENDOR="${DSHOW_PLUGIN_VENDOR}")
 add_definitions(-DDSHOW_PLUGIN_VENDOR_L=L"${DSHOW_PLUGIN_VENDOR}")
 add_definitions(-DDSHOW_PLUGIN_ARCH_L=L"${DSHOW_PLUGIN_ARCH}")
+add_definitions(-DQT_DEBUG)
 
 include_directories(
     ${AVKYS_PLUGIN_INCLUDES}

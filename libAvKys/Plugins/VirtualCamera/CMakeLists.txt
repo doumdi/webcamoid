@@ -6,6 +6,7 @@ add_definitions(-DUNICODE)
 find_package(Qt5Core REQUIRED)
 
 
+
 #submodule(s)
 FILE(MAKE_DIRECTORY ${LIBRARY_OUTPUT_PATH}/submodules/${PLUGIN_NAME})
 
