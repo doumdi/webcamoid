@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+#include <QApplication>
 #include <QDebug>
 #include <QMetaObject>
 #include <akvideocaps.h>
@@ -9,21 +9,16 @@
 
 int main(int argc, char* argv[])
 {
-    QCoreApplication app(argc,argv);
+    QApplication app(argc,argv);
 
     qDebug() << "Starting...";
     //Why do we need to do that?
     //qRegisterMetaType<AkPacket>("AkPacket");
     Ak::registerTypes();
+
+    //This is required and will initialize the IPC system on Windows
     Ak::setQmlEngine(nullptr);
 
-/*
-    HRESULT hr_init = CoInitializeEx(nullptr, COINIT_MULTITHREADED); //CoInitialize(NULL);
-    if (FAILED(hr_init))
-    {
-        return -2;
-    }
-*/
     //Tell the library where to look for plugins
     //TODO Hardcoded for now...
     QStringList searchPaths;
@@ -33,13 +28,15 @@ int main(int argc, char* argv[])
 
     qDebug() << "MultiSrc submodules: " << AkElement::listSubModules("MultiSrc");
     qDebug() << "VirtualCamera submodules: "<< AkElement::listSubModules("VirtualCamera");
+    qDebug() << "DesktopCapture submodules: "<< AkElement::listSubModules("DesktopCapture");
 
     //This should load the library. Let's see...
     auto MultiSrcPtr = AkElement::create("MultiSrc");
-
     auto VirtualCameraPtr = AkElement::create("VirtualCamera");
+    auto DesktopCapturePtr = AkElement::create("DesktopCapture");
     QString deviceId;
     AkVideoCapsList formats;
+
 /*
     QMetaObject::invokeMethod(VirtualCameraPtr.data(),
                               "createWebcam",
@@ -47,10 +44,13 @@ int main(int argc, char* argv[])
                               Q_ARG(QString, "VirtCam"),
                               Q_ARG(AkVideoCapsList, formats));
 */
-    if (MultiSrcPtr && VirtualCameraPtr)
+    if (MultiSrcPtr && VirtualCameraPtr && DesktopCapturePtr)
     {
         qDebug() << "Linking Src & Dest";
-        MultiSrcPtr->link(VirtualCameraPtr);
+        //MultiSrcPtr->link(VirtualCameraPtr);
+        DesktopCapturePtr->link(VirtualCameraPtr);
+
+        DesktopCapturePtr->setProperty("media", "screen://0");
 
 
         //Set Parameters
@@ -65,7 +65,8 @@ int main(int argc, char* argv[])
         VirtualCameraPtr->setProperty("swapRgb", true);
 
         // start the pipeline.
-        MultiSrcPtr->setState(AkElement::ElementStatePlaying);
+        DesktopCapturePtr->setState(AkElement::ElementStatePlaying);
+        //MultiSrcPtr->setState(AkElement::ElementStatePlaying);
         VirtualCameraPtr->setState(AkElement::ElementStatePlaying);
 
     }

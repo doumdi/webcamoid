@@ -17,7 +17,7 @@ QT5_WRAP_CPP(demo_moc_srcs ${demo_headers})
 
 
 add_executable(AvKysDemo ${demo_srcs} ${demo_headers} ${demo_moc_srcs})
-qt5_use_modules(AvKysDemo Core Concurrent Gui Qml)
+qt5_use_modules(AvKysDemo Core Widgets Concurrent Gui Qml)
 target_link_libraries(AvKysDemo ${AVKYS_LIBS})
 
 
