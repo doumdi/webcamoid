@@ -1542,7 +1542,28 @@ std::vector<AkVCam::MonikerPtr> AkVCam::IpcBridgePrivate::listCameras() const
                                   IID_ICreateDevEnum,
                                   reinterpret_cast<void **>(&deviceEnumerator));
 
-    if (FAILED(hr))
+    if (hr == S_OK) {
+
+        // Create an enumerator for the category.
+        IEnumMoniker *enumMoniker = nullptr;
+
+        if (deviceEnumerator->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
+                                                    &enumMoniker,
+                                                    0) == S_OK) {
+            enumMoniker->Reset();
+            IMoniker *moniker = nullptr;
+
+            while (enumMoniker->Next(1, &moniker, nullptr) == S_OK)
+                cameras.push_back(MonikerPtr(moniker, [](IMoniker *moniker) {
+                    moniker->Release();
+                }));
+
+            enumMoniker->Release();
+        }
+
+        deviceEnumerator->Release();
+    }
+    else {
         if (hr == E_POINTER)
             AkLoggerLog("E_POINTER");
 
@@ -1554,32 +1575,7 @@ std::vector<AkVCam::MonikerPtr> AkVCam::IpcBridgePrivate::listCameras() const
 
         if (hr == REGDB_E_CLASSNOTREG)
             AkLoggerLog("REGDB_E_CLASSNOTREG");
-
-        std::stringstream ss;
-        ss << hr;
-        AkLoggerLog(ss.str().c_str());
-
-        //exit(-1);
-        //return cameras;
-
-    // Create an enumerator for the category.
-    IEnumMoniker *enumMoniker = nullptr;
-
-    if (deviceEnumerator->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
-                                                &enumMoniker,
-                                                0) == S_OK) {
-        enumMoniker->Reset();
-        IMoniker *moniker = nullptr;
-
-        while (enumMoniker->Next(1, &moniker, nullptr) == S_OK)
-            cameras.push_back(MonikerPtr(moniker, [](IMoniker *moniker) {
-                moniker->Release();
-            }));
-
-        enumMoniker->Release();
     }
-
-    deviceEnumerator->Release();
 
     std::cout << "Cameras size" << cameras.size() << std::endl;
 

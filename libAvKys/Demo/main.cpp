@@ -9,22 +9,21 @@
 
 int main(int argc, char* argv[])
 {
-
-
     QCoreApplication app(argc,argv);
 
     qDebug() << "Starting...";
     //Why do we need to do that?
     //qRegisterMetaType<AkPacket>("AkPacket");
     Ak::registerTypes();
+    Ak::setQmlEngine(nullptr);
 
-
+/*
     HRESULT hr_init = CoInitializeEx(nullptr, COINIT_MULTITHREADED); //CoInitialize(NULL);
     if (FAILED(hr_init))
     {
         return -2;
     }
-
+*/
     //Tell the library where to look for plugins
     //TODO Hardcoded for now...
     QStringList searchPaths;
@@ -50,14 +49,14 @@ int main(int argc, char* argv[])
 */
     if (MultiSrcPtr && VirtualCameraPtr)
     {
-        qDebug() << "Not Linking Src & Dest";
+        qDebug() << "Linking Src & Dest";
         MultiSrcPtr->link(VirtualCameraPtr);
 
 
         //Set Parameters
         //Start streaming something from VLC at this address for testing...
-        MultiSrcPtr->setProperty("media", "rtsp://localhost:8554/live");
-        //MultiSrcPtr->setProperty("media", "C:/Big_Buck_Bunny_360_10s_30MB.mp4");
+        //MultiSrcPtr->setProperty("media", "rtsp://localhost:8554/live");
+        MultiSrcPtr->setProperty("media", "C:/Big_Buck_Bunny_360_10s_30MB.mp4");
         MultiSrcPtr->setProperty("loop", false);          // Loop the video/media if you need it.
         MultiSrcPtr->setProperty("showLog", true);       // Show play log in console, similar to MPlayer and ffplay.
 
