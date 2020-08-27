@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
         DesktopCapturePtr->link(VirtualCameraPtr);
 
         DesktopCapturePtr->setProperty("media", "screen://0");
+        DesktopCapturePtr->setProperty("fps", "10.0");
 
 
         //Set Parameters
