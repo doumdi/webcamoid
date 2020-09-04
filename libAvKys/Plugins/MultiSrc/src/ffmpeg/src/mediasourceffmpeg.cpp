@@ -713,10 +713,10 @@ bool MediaSourceFFmpeg::initContext()
         av_dict_set(&inputOptions, "timeout", "3000", 0);
     else if (uri.startsWith("rtsp://"))
     {
-        av_dict_set(&inputOptions, "analyzeduration", "5000000", 0);
-        av_dict_set(&inputOptions, "probesize", "5000000", 0);
-        //av_dict_set(&inputOptions,"rtsp_transport", "tcp",0);
-        av_dict_set(&inputOptions,"stimeout", "5000000",0);
+        //av_dict_set(&inputOptions, "analyzeduration", "5000000", 0);
+        //av_dict_set(&inputOptions, "probesize", "5000000", 0);
+        av_dict_set(&inputOptions,"rtsp_transport", "tcp",0);
+        //av_dict_set(&inputOptions,"stimeout", "5000000",0);
         //av_dict_set(&inputOptions,"reorder_queue_size", "0", 0);
         //av_dict_set(&inputOptions,"max_delay", "200000",0);
         //av_dict_set(&inputOptions,"muxdelay", "0.5",0);

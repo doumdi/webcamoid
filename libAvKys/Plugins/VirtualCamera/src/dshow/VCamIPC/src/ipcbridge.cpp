@@ -562,13 +562,21 @@ std::vector<uint64_t> AkVCam::IpcBridge::clientsPids() const
     auto driverInstallPath =
             programFilesPath() + L"\\" DSHOW_PLUGIN_NAME_L L".plugin";
 
+    //auto driverInstallPath = driverPath;
+
     std::vector<std::wstring> pluginsPaths;
+
+
+
 
     for (auto path: this->d->findFiles(driverPath,
                                        DSHOW_PLUGIN_NAME_L L".dll")) {
-        auto pluginPath = replace(path, driverPath, driverInstallPath);
-        pluginsPaths.push_back(pluginPath);
+        //auto pluginPath = replace(path, driverPath, driverInstallPath);
+        //pluginsPaths.push_back(pluginPath);
+        pluginsPaths.push_back(path);
     }
+
+
 
     std::vector<uint64_t> pids;
     DWORD sessionHnd = 0;
