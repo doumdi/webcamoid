@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 
         //Set Parameters
         //Start streaming something from VLC at this address for testing...
-        MultiSrcPtr->setProperty("media", "rtsp://admin:admin@24.53.36.14:9001/live.sdp");
+        MultiSrcPtr->setProperty("media", "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov");
         //MultiSrcPtr->setProperty("media", "C:/Big_Buck_Bunny_360_10s_30MB.mp4");
         MultiSrcPtr->setProperty("loop", false);          // Loop the video/media if you need it.
         MultiSrcPtr->setProperty("showLog", true);       // Show play log in console, similar to MPlayer and ffplay.
