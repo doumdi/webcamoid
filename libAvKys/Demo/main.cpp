@@ -3,7 +3,9 @@
 #include <QMetaObject>
 #include <akvideocaps.h>
 #include <ak.h>
-#include <objbase.h>
+#ifndef Q_OS_LINUX
+    #include <objbase.h>
+#endif
 #include <QDir>
 #include "main.h"
 

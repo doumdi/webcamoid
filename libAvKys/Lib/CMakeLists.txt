@@ -13,6 +13,13 @@ if(APPLE)
     add_definitions(-DEXECPREFIX="exec")
 endif()
 
+if(UNIX)
+    add_definitions(-DEXTENSION_SHLIB="so")
+    add_definitions(-DPREFIX_SHLIB="lib")
+    add_definitions(-DINSTALLPLUGINSDIR="AvKysPlugins")
+    add_definitions(-DEXECPREFIX="exec")
+endif()
+
 if(WIN32)
     add_definitions(-DEXTENSION_SHLIB="dll")
     add_definitions(-DPREFIX_SHLIB="")
