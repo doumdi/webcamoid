@@ -3,7 +3,7 @@
 #include <QMetaObject>
 #include <akvideocaps.h>
 #include <ak.h>
-#ifndef Q_OS_LINUX
+#ifdef Q_OS_WIN
     #include <objbase.h>
 #endif
 #include <QDir>
