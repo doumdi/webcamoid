@@ -39,6 +39,11 @@ if(APPLE)
     add_subdirectory(src/cmio)
 endif()
 
+if(UNIX)
+    add_subdirectory(src/v4l2sys)
+endif()
+
+
 if(WIN32)
     add_subdirectory(src/dshow)
 endif()
@@ -62,6 +67,11 @@ if(APPLE)
     target_link_libraries(${PLUGIN_NAME} ${AVKYS_PLUGIN_LIBRARIES} VCamIPC VCamUtils "-framework Foundation" "-framework IOSurface")
 endif()
 
+
+if(UNIX)
+    target_link_libraries(${PLUGIN_NAME} ${AVKYS_PLUGIN_LIBRARIES} VCamIPC VCamUtils)
+endif()
+
 if(WIN32)
      target_link_libraries(${PLUGIN_NAME}
         ${AVKYS_PLUGIN_LIBRARIES}
@@ -76,3 +86,5 @@ if(WIN32)
         oleaut32
         shell32)
 endif()
+
+
