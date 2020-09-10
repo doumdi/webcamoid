@@ -13,7 +13,7 @@ if(APPLE)
     add_definitions(-DEXECPREFIX="exec")
 endif()
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     add_definitions(-DEXTENSION_SHLIB="so")
     add_definitions(-DPREFIX_SHLIB="lib")
     add_definitions(-DINSTALLPLUGINSDIR="AvKysPlugins")

@@ -39,7 +39,7 @@ if(APPLE)
     add_subdirectory(src/cmio)
 endif()
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     add_subdirectory(src/v4l2sys)
 endif()
 
@@ -68,7 +68,7 @@ if(APPLE)
 endif()
 
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     target_link_libraries(${PLUGIN_NAME} ${AVKYS_PLUGIN_LIBRARIES} VCamIPC VCamUtils)
 endif()
 

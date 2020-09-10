@@ -34,16 +34,16 @@ if(APPLE)
 
     set(FFMPEG_INCLUDES /usr/local/opt/ffmpeg/include CACHE INTERNAL "doc string")
     set(FFMPEG_LIBS "-L/usr/local/opt/ffmpeg/lib/ -lavcodec -lavfilter -lavutil -lswresample -lavdevice -lavformat -lpostproc -lswscale" CACHE INTERNAL "doc string")
-endif(APPLE)
+endif()
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     #Installed DLLS (from packages libavcodec-dev, libavdevice-dev and dependencies)
     FILE(GLOB FFMPEG_DLL "/usr/lib/x86_64-linux-gnu/libav*.so")
     MESSAGE ( STATUS "FFMpeg libs = ${FFMPEG_DLL}")
 
     set(FFMPEG_INCLUDES /usr/local/opt/ffmpeg/include CACHE INTERNAL "doc string")
     set(FFMPEG_LIBS "-L/usr/include/x86_64-linux-gnu/libavcodec -L/usr/include/x86_64-linux-gnu/libavdevice -lavcodec -lavfilter -lavutil -lswresample -lavdevice -lavformat -lpostproc -lswscale" CACHE INTERNAL "doc string")
-endif(UNIX)
+endif()
 
 
 if(WIN32)
@@ -79,7 +79,7 @@ if(WIN32)
     set(FFMPEG_LIBS "${ffmpeg_lib_names}" CACHE INTERNAL "doc string")
     message ( STATUS "FFMpeg libs = ${FFMPEG_LIBS}")
 
-endif(WIN32)
+endif()
 
 
 #add subdirectories
