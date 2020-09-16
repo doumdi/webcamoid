@@ -29,17 +29,24 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 #Useful definitions
 if(APPLE)
     #Installed DLLS (from homebrew)
-    FILE(GLOB FFMPEG_DLL "/usr/local/opt/ffmpeg/lib/*.dylib")
+    FILE(GLOB FFMPEG_DLL "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeg/ffmpeg-4.2.3-macos64-shared/bin/*.dylib")
     MESSAGE ( STATUS "FFMpeg libs = ${FFMPEG_DLL}")
 
-    set(FFMPEG_INCLUDES /usr/local/opt/ffmpeg/include CACHE INTERNAL "doc string")
-    set(FFMPEG_LIBS "-L/usr/local/opt/ffmpeg/lib/ -lavcodec -lavfilter -lavutil -lswresample -lavdevice -lavformat -lpostproc -lswscale" CACHE INTERNAL "doc string")
+    #For IN-SOURCE debug
+    file(COPY ${FFMPEG_DLL} DESTINATION ${EXECUTABLE_OUTPUT_PATH})
+
+
+    set(FFMPEG_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/ffmpeg/ffmpeg-4.2.3-macos64-dev/include CACHE INTERNAL "doc string")
+    set(FFMPEG_LIBS ${FFMPEG_DLL} CACHE INTERNAL "doc string")
 endif()
 
 if(UNIX AND NOT APPLE)
     #Installed DLLS (from packages libavcodec-dev, libavdevice-dev and dependencies)
     FILE(GLOB FFMPEG_DLL "/usr/lib/x86_64-linux-gnu/libav*.so")
     MESSAGE ( STATUS "FFMpeg libs = ${FFMPEG_DLL}")
+
+    #For IN-SOURCE debug
+    file(COPY ${FFMPEG_DLL} DESTINATION ${EXECUTABLE_OUTPUT_PATH})
 
     set(FFMPEG_INCLUDES /usr/local/opt/ffmpeg/include CACHE INTERNAL "doc string")
     set(FFMPEG_LIBS "-L/usr/include/x86_64-linux-gnu/libavcodec -L/usr/include/x86_64-linux-gnu/libavdevice -lavcodec -lavfilter -lavutil -lswresample -lavdevice -lavformat -lpostproc -lswscale" CACHE INTERNAL "doc string")
