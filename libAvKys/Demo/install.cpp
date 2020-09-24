@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QSize>
 #include <ak.h>
 #include <akelement.h>
 #include <akvideocaps.h>
@@ -47,12 +48,21 @@ int main(int argc, char* argv[])
         //                                 const AkVideoCapsList &formats);
 
         AkVideoCapsList formats;
-        AkVideoCaps caps(AkVideoCaps::Format_yuyv422, 640, 480, AkFrac(15,1));
 
+        QList<QSize> camSizes;
+        camSizes << QSize(160,120);
+        camSizes << QSize(320,240);
+        camSizes << QSize(640,480);
+        camSizes << QSize(800,600);
+        camSizes << QSize(1280,720);
+        camSizes << QSize(1920,1080);
 
-
-        formats << caps;
-
+        //Fill format for each size
+        foreach(QSize screenSize, camSizes) {
+            formats << AkVideoCaps(AkVideoCaps::Format_uyvy422, screenSize.width(), screenSize.height(), AkFrac(30,1));
+            formats << AkVideoCaps(AkVideoCaps::Format_rgb24, screenSize.width(), screenSize.height(), AkFrac(30,1));
+            formats << AkVideoCaps(AkVideoCaps::Format_yuyv422, screenSize.width(), screenSize.height(), AkFrac(30,1));
+        }
         return QMetaObject::invokeMethod(VirtualCameraPtr.data(),"createWebcam",Q_ARG(QString,"TeraCam"),Q_ARG(AkVideoCapsList, formats));
     }
 

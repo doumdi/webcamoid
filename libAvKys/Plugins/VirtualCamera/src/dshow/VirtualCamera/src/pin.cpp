@@ -136,7 +136,13 @@ AkVCam::Pin::Pin(BaseFilter *baseFilter,
     this->d->m_swapRgb = false;
     auto bmp = programFilesPath()
              + L"\\" DSHOW_PLUGIN_NAME_L L".plugin\\share\\TestFrame.bmp";
-    this->d->m_testFrame.load(std::string(bmp.begin(), bmp.end()));
+
+    if (!this->d->m_testFrame.load(std::string(bmp.begin(), bmp.end()))) {
+         AkLoggerLog("Error: ", "Unable to load TestFrame.bmp");
+    }
+    else {
+        AkLoggerLog("Success: ", "Load TestFrame.bmp");
+    }
 
     baseFilter->QueryInterface(IID_IAMVideoProcAmp,
                                reinterpret_cast<void **>(&this->d->m_videoProcAmp));

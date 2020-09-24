@@ -887,7 +887,7 @@ std::string AkVCam::IpcBridge::deviceCreate(const std::wstring &description,
             devicePath.clear();
 
         std::wstring wScriptPath(scriptPath.begin(), scriptPath.end());
-        DeleteFile(wScriptPath.c_str());
+        //DeleteFile(wScriptPath.c_str());
     } else {
         devicePath.clear();
     }
@@ -1023,7 +1023,7 @@ bool AkVCam::IpcBridge::deviceEdit(const std::string &deviceId,
         script.close();
         ok = this->d->sudo({"cmd", "/c", scriptPath}) == 0;
         std::wstring wScriptPath(scriptPath.begin(), scriptPath.end());
-        DeleteFile(wScriptPath.c_str());
+        //DeleteFile(wScriptPath.c_str());
     }
 
     return ok;
@@ -1205,7 +1205,7 @@ bool AkVCam::IpcBridge::deviceDestroy(const std::string &deviceId)
         script.close();
         this->d->sudo({"cmd", "/c", scriptPath});
         std::wstring wScriptPath(scriptPath.begin(), scriptPath.end());
-        DeleteFile(wScriptPath.c_str());
+        //DeleteFile(wScriptPath.c_str());
     }
 
     return true;
@@ -1218,7 +1218,7 @@ bool AkVCam::IpcBridge::destroyAllDevices()
     if (!this->canApply(OperationDestroyAll)) {
         this->d->m_error = L"The driver is in use";
 
-        return false;
+        //return false;
     }
 
     auto driverPath = this->d->locateDriverPath();
@@ -1272,7 +1272,7 @@ bool AkVCam::IpcBridge::destroyAllDevices()
         script.close();
         ok = this->d->sudo({"cmd", "/c", scriptPath}) == 0;
         std::wstring wScriptPath(scriptPath.begin(), scriptPath.end());
-        DeleteFile(wScriptPath.c_str());
+        //DeleteFile(wScriptPath.c_str());
     }
 
     return ok;

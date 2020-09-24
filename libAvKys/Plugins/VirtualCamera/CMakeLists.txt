@@ -87,4 +87,5 @@ if(WIN32)
         shell32)
 endif()
 
-
+# Copy test frame
+file(COPY share/TestFrame/TestFrame.bmp DESTINATION ${EXECUTABLE_OUTPUT_PATH}/AkVirtualCamera.plugin/share)
