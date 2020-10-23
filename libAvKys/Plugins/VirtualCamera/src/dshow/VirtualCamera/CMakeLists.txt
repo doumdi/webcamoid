@@ -74,3 +74,10 @@ target_link_libraries(${DSHOW_PLUGIN_NAME}
     user32
     uuid
     winmm)
+
+
+# Install
+install(TARGETS ${DSHOW_PLUGIN_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/AkVirtualCamera.plugin/${DSHOW_PLUGIN_ARCH}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/AkVirtualCamera.plugin/${DSHOW_PLUGIN_ARCH}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/AkVirtualCamera.plugin/${DSHOW_PLUGIN_ARCH})
